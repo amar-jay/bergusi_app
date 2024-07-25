@@ -5,7 +5,7 @@ class DroneControlPage extends StatefulWidget {
   const DroneControlPage({super.key});
 
   @override
-  _DroneControlWidgetState imagescreateState() => _DroneControlWidgetState();
+  State<DroneControlPage> createState() => _DroneControlWidgetState();
 }
 
 class _DroneControlWidgetState extends State<DroneControlPage> {
