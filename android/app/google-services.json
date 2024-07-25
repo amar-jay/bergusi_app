@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "542463082231",
+    "project_id": "bergusi",
+    "storage_bucket": "bergusi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542463082231:android:c81d686f70d3b9de999df2",
+        "android_client_info": {
+          "package_name": "com.marmara.bergusi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo68BNZLR0VmuRrn4VBgD-qpWd0iGOtns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
