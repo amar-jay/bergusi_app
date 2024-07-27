@@ -28,12 +28,12 @@ class CustomDrawer extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
-          ListTile(
-            title: const Text('Onboarding'),
-            onTap: () {
-              Navigator.pushNamed(context, onboardingPageRoute);
-            },
-          ),
+          // ListTile(
+          //   title: const Text('Onboarding'),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, onboardingPageRoute);
+          //   },
+          // ),
           ListTile(
             title: const Text('IP Address'),
             onTap: () {
@@ -54,7 +54,7 @@ class CustomDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            title: const Text('Drone Telemetry'),
+            title: const Text('Drone Status'),
             onTap: () {
               Navigator.pushNamed(context, droneStatusPageRoute);
             },
