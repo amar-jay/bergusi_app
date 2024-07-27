@@ -3,23 +3,39 @@ import 'dart:async';
 
 import 'package:myapp/pages/drone_status/drone_status_stream.dart';
 
-class DroneStatusWidget extends StatefulWidget {
-  final Stream<DroneStatus> statusStream;
+// Assume the DroneStatus and DroneStatusStream classes are in a separate file
+// import 'drone_status.dart';
 
-  const DroneStatusWidget({super.key, required this.statusStream});
+class DroneStatusPage extends StatefulWidget {
+  const DroneStatusPage({Key? key}) : super(key: key);
 
   @override
-  State<DroneStatusWidget> createState() => _DroneStatusWidgetState();
+  _DroneStatusPageState createState() => _DroneStatusPageState();
 }
 
-class _DroneStatusWidgetState extends State<DroneStatusWidget> {
+class _DroneStatusPageState extends State<DroneStatusPage> {
+  late DroneStatusStream _droneStatusStream;
   late StreamSubscription<DroneStatus> _subscription;
   DroneStatus? _currentStatus;
 
   @override
   void initState() {
     super.initState();
-    _subscription = widget.statusStream.listen((status) {
+    _droneStatusStream = DroneStatusStream();
+    _initializeStream();
+  }
+
+  void _initializeStream() async {
+    final initialStatus = await _droneStatusStream.init(
+      DroneStatusType.random,
+      0,
+      baseUrl: 'https://example.com/api', // Replace with your actual API URL
+    );
+    setState(() {
+      _currentStatus = initialStatus;
+    });
+
+    _subscription = _currentStatus!.stream().listen((status) {
       setState(() {
         _currentStatus = status;
       });
@@ -34,141 +50,127 @@ class _DroneStatusWidgetState extends State<DroneStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Drone Status',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: _currentStatus == null
+          ? Center(
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor))
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildStatusOverview(),
+                    const SizedBox(height: 24),
+                    _buildDetailedInfo(),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+
+  Widget _buildStatusOverview() {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.all(16),
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Drone Status',
-              style: Theme.of(context).textTheme.headlineSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildOverviewItem(
+                  icon: Icons.battery_charging_full,
+                  value: '${_currentStatus!.batteryLevel.toStringAsFixed(1)}%',
+                  label: 'Battery',
+                ),
+                _buildOverviewItem(
+                  icon: Icons.speed,
+                  value: '${_currentStatus!.speed.toStringAsFixed(1)} m/s',
+                  label: 'Speed',
+                ),
+                _buildOverviewItem(
+                  icon: Icons.height,
+                  value: '${_currentStatus!.altitude.toStringAsFixed(1)} m',
+                  label: 'Altitude',
+                ),
+              ],
             ),
             const SizedBox(height: 16),
-            if (_currentStatus != null) ...[
-              _buildStatusRow('Longitude',
-                  '${_currentStatus!.longitude.toStringAsFixed(6)}°'),
-              _buildStatusRow('Latitude',
-                  '${_currentStatus!.latitude.toStringAsFixed(6)}°'),
-              _buildStatusRow('Altitude',
-                  '${_currentStatus!.altitude.toStringAsFixed(2)} m'),
-              _buildStatusRow(
-                  'Speed', '${_currentStatus!.speed.toStringAsFixed(2)} m/s'),
-              _buildStatusRow('Battery',
-                  '${_currentStatus!.batteryLevel.toStringAsFixed(1)}%'),
-              _buildConnectionStatus(_currentStatus!.connectionStatus),
-            ] else
-              const Center(child: CircularProgressIndicator()),
+            _buildConnectionStatus(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStatusRow(String label, String value) {
+  Widget _buildOverviewItem(
+      {required IconData icon, required String value, required String label}) {
+    return Column(
+      children: [
+        Icon(icon, size: 32, color: Theme.of(context).primaryColor),
+        const SizedBox(height: 8),
+        Text(value, style: Theme.of(context).textTheme.bodyLarge),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
+      ],
+    );
+  }
+
+  Widget _buildConnectionStatus() {
+    final isConnected = _currentStatus!.connectionStatus == 'Connected';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          isConnected ? Icons.wifi : Icons.wifi_off,
+          color: isConnected ? Colors.green : Colors.red,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          _currentStatus!.connectionStatus,
+          style: TextStyle(
+            color: isConnected ? Colors.green : Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDetailedInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Location Details',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        _buildInfoTile(
+            'Longitude', '${_currentStatus!.longitude.toStringAsFixed(4)}°'),
+        _buildInfoTile(
+            'Latitude', '${_currentStatus!.latitude.toStringAsFixed(4)}°'),
+      ],
+    );
+  }
+
+  Widget _buildInfoTile(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text(value),
+          Text(title, style: Theme.of(context).textTheme.bodyLarge),
+          Text(value, style: Theme.of(context).textTheme.labelLarge),
         ],
       ),
-    );
-  }
-
-  Widget _buildConnectionStatus(String status) {
-    Color statusColor;
-    IconData statusIcon;
-
-    switch (status.toLowerCase()) {
-      case 'connected':
-        statusColor = Colors.green;
-        statusIcon = Icons.check_circle;
-        break;
-      case 'disconnected':
-        statusColor = Colors.red;
-        statusIcon = Icons.cancel;
-        break;
-      default:
-        statusColor = Colors.orange;
-        statusIcon = Icons.warning;
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        children: [
-          Icon(statusIcon, color: statusColor),
-          const SizedBox(width: 8),
-          Text(
-            'Status: $status',
-            style: TextStyle(color: statusColor, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Example usage:
-class DroneStatusPage extends StatefulWidget {
-  const DroneStatusPage({super.key});
-
-  @override
-  State<DroneStatusPage> createState() => _DroneStatusPageState();
-}
-
-class _DroneStatusPageState extends State<DroneStatusPage> {
-  // This would typically come from your drone control system
-  Stream<DroneStatus>? droneStatus;
-
-  @override
-  void initState() async {
-    super.initState();
-    startStreaming();
-  }
-
-  void startStreaming() async {
-    final drone = await DroneStatusStream().init(DroneStatusType.random, 10);
-    final s = drone.stream();
-    setState(() async {
-      droneStatus = s;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          title: Text(
-            'Drone Control',
-            style: theme.textTheme.titleLarge,
-          )),
-      body: Center(
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 10),
-            droneStatus != null
-                ? DroneStatusWidget(statusStream: droneStatus!)
-                : Container(),
-          ],
-        ),
-      )),
     );
   }
 }
