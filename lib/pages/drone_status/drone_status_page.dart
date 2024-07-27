@@ -131,6 +131,10 @@ class _DroneStatusPageState extends State<DroneStatusPage> {
   @override
   void initState() async {
     super.initState();
+    startStreaming();
+  }
+
+  void startStreaming() async {
     final drone = await DroneStatusStream().init(DroneStatusType.random, 10);
     final s = drone.stream();
     setState(() async {
