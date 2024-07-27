@@ -8,6 +8,7 @@
     pkgs.nodePackages.firebase-tools
     pkgs.jdk17
     pkgs.unzip
+    pkgs.git-lfs
     pkgs.python310
     pkgs.python310Packages.pip
 
