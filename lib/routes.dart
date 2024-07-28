@@ -103,7 +103,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case droneStatusPageRoute:
       return MaterialPageRoute(
-        builder: (context) => DroneStatusPage(),
+        builder: (context) => const DroneStatusPage(),
       );
     case droneControlPageRoute:
       return MaterialPageRoute(

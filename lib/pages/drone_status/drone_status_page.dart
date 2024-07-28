@@ -4,47 +4,46 @@ import 'dart:async';
 import 'package:myapp/pages/drone_status/drone_status_stream.dart';
 
 // Assume the DroneStatus and DroneStatusStream classes are in a separate file
-// import 'drone_status.dart';
 
 class DroneStatusPage extends StatefulWidget {
-  const DroneStatusPage({Key? key}) : super(key: key);
+  const DroneStatusPage({super.key});
 
   @override
   _DroneStatusPageState createState() => _DroneStatusPageState();
 }
 
 class _DroneStatusPageState extends State<DroneStatusPage> {
-  late DroneStatusStream _droneStatusStream;
-  late StreamSubscription<DroneStatus> _subscription;
+  DroneStatusStream? _droneStatusStream;
+  StreamSubscription<DroneStatus>? _subscription;
   DroneStatus? _currentStatus;
 
   @override
   void initState() {
     super.initState();
-    _droneStatusStream = DroneStatusStream();
     _initializeStream();
   }
 
-  void _initializeStream() async {
-    final initialStatus = await _droneStatusStream.init(
-      DroneStatusType.random,
-      0,
-      baseUrl: 'https://example.com/api', // Replace with your actual API URL
-    );
+  void _initializeStream() {
+    setState(() {
+      _droneStatusStream = DroneStatusStream();
+    });
+    final initialStatus = _droneStatusStream?.random(10);
     setState(() {
       _currentStatus = initialStatus;
     });
 
-    _subscription = _currentStatus!.stream().listen((status) {
-      setState(() {
-        _currentStatus = status;
+    setState(() {
+      _subscription = _currentStatus?.stream().listen((status) {
+        setState(() {
+          _currentStatus = status;
+        });
       });
     });
   }
 
   @override
   void dispose() {
-    _subscription.cancel();
+    _subscription?.cancel();
     super.dispose();
   }
 
@@ -90,17 +89,17 @@ class _DroneStatusPageState extends State<DroneStatusPage> {
               children: [
                 _buildOverviewItem(
                   icon: Icons.battery_charging_full,
-                  value: '${_currentStatus!.batteryLevel.toStringAsFixed(1)}%',
+                  value: '${_currentStatus?.batteryLevel.toStringAsFixed(1)}%',
                   label: 'Battery',
                 ),
                 _buildOverviewItem(
                   icon: Icons.speed,
-                  value: '${_currentStatus!.speed.toStringAsFixed(1)} m/s',
+                  value: '${_currentStatus?.speed.toStringAsFixed(1)} m/s',
                   label: 'Speed',
                 ),
                 _buildOverviewItem(
                   icon: Icons.height,
-                  value: '${_currentStatus!.altitude.toStringAsFixed(1)} m',
+                  value: '${_currentStatus?.altitude.toStringAsFixed(1)} m',
                   label: 'Altitude',
                 ),
               ],
@@ -153,10 +152,46 @@ class _DroneStatusPageState extends State<DroneStatusPage> {
         const Text('Location Details',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 16),
-        _buildInfoTile(
-            'Longitude', '${_currentStatus!.longitude.toStringAsFixed(4)}°'),
-        _buildInfoTile(
-            'Latitude', '${_currentStatus!.latitude.toStringAsFixed(4)}°'),
+        _buildInfoTile('Distance covered (X)',
+            '${_currentStatus!.longitude.toStringAsFixed(4)}°'),
+        _buildInfoTile('Distance convered (Y)',
+            '${_currentStatus!.latitude.toStringAsFixed(4)}°'),
+        _buildInfoTile('Distance convered (Z)',
+            '${_currentStatus!.latitude.toStringAsFixed(4)}°'),
+        _buildInfoTile('Roll', '${_currentStatus!.roll.toStringAsFixed(2)}°'),
+        _buildInfoTile('Pitch', '${_currentStatus!.pitch.toStringAsFixed(2)}°'),
+        _buildInfoTile('Yaw', '${_currentStatus!.yaw.toStringAsFixed(2)}°'),
+        const SizedBox(height: 24),
+        const Text('Velocity Details',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        _buildInfoTile('Velocity (X)',
+            '${_currentStatus!.velocityX.toStringAsFixed(2)} m/s'),
+        _buildInfoTile('Velocity (Y)',
+            '${_currentStatus!.velocityY.toStringAsFixed(2)} m/s'),
+        _buildInfoTile('Velocity (Z)',
+            '${_currentStatus!.velocityZ.toStringAsFixed(2)} m/s'),
+        const SizedBox(height: 24),
+        const Text('Acceleration Details',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        _buildInfoTile('Acceleration (X)',
+            '${_currentStatus!.accelerationX.toStringAsFixed(2)} m/s^2'),
+        _buildInfoTile('Acceleration (Y)',
+            '${_currentStatus!.accelerationY.toStringAsFixed(2)} m/s^2'),
+        _buildInfoTile('Acceleration (Z)',
+            '${_currentStatus!.accelerationZ.toStringAsFixed(2)} m/s^2'),
+        const SizedBox(height: 24),
+        const Text('Status',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        _buildInfoTile('Status', _currentStatus!.status),
+        const SizedBox(height: 24),
+        const Text('Battery Details',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        _buildInfoTile('Battery Level',
+            '${_currentStatus!.batteryLevel.toStringAsFixed(1)}%'),
       ],
     );
   }

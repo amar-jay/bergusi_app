@@ -8,10 +8,8 @@
     pkgs.nodePackages.firebase-tools
     pkgs.jdk17
     pkgs.unzip
-    pkgs.git-lfs
-    pkgs.python310
-    pkgs.python310Packages.pip
-
+    pkgs.python311Packages.pip
+    pkgs.python3
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -20,6 +18,8 @@
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
+      "ms-python.debugpy"
+      "ms-python.python"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
@@ -67,3 +67,6 @@
     };
   };
 }
+
+# To learn more about how to use Nix to configure your environment
+# see: https://developers.google.com/idx/guides/customize-idx-env
