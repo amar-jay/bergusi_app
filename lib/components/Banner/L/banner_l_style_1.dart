@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:myapp/components/Banner/L/banner_l.dart';
+import 'package:bergusi/components/Banner/L/banner_l.dart';
 
 import '../../../constants.dart';
 

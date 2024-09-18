@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/drone_control.dart';
-import 'package:myapp/pages/auth/login_page.dart';
-import 'package:myapp/pages/auth/password_recovery_page.dart';
-import 'package:myapp/pages/auth/signup_page.dart';
-import 'package:myapp/pages/drone_status/drone_status_page.dart';
-import 'package:myapp/pages/drone_status/drone_telemetry_page.dart';
-import 'package:myapp/pages/ip_address/ip_address_page.dart';
-import 'package:myapp/pages/ip_address/qr_scanner_page.dart';
-import 'package:myapp/pages/onboarding/onboarding_page.dart';
+import 'package:bergusi/drone_control.dart';
+import 'package:bergusi/pages/auth/login_page.dart';
+import 'package:bergusi/pages/auth/password_recovery_page.dart';
+import 'package:bergusi/pages/auth/signup_page.dart';
+import 'package:bergusi/pages/drone_status/drone_status_page.dart';
+import 'package:bergusi/pages/drone_status/drone_telemetry_page.dart';
+import 'package:bergusi/pages/ip_address/ip_address_page.dart';
+import 'package:bergusi/pages/ip_address/qr_scanner_page.dart';
+import 'package:bergusi/pages/onboarding/onboarding_page.dart';
 
 const String onboardingPageRoute = "onboarding";
 const String mainPageRoute = 'main';

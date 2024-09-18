@@ -1,4 +1,4 @@
-# myapp
+# bergusi
 
 A new Flutter project.
 

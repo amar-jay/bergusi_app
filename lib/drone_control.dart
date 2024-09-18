@@ -1,3 +1,4 @@
+import 'package:bergusi/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,7 +18,7 @@ class _DroneControlWidgetState extends State<DroneControlPage> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-      'assets/videos/drone-0.mp4',
+      'assets/videos/344.mp4',
     )..initialize().then((_) {
         setState(() {});
         _controller.play();
@@ -34,15 +35,20 @@ class _DroneControlWidgetState extends State<DroneControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      // ),
+      // set orientation to potrait
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          // Add back button
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        // leading: IconButton(
+        //   // Add back button
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.of(context).pop();
+        //   },
+        // ),
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/pages/onboarding/onboarding_page.dart';
-//import 'package:myapp/pages/ip_address/qr_scanner_page.dart';
-import 'package:myapp/routes.dart';
-import 'package:myapp/utils/theme_data.dart';
+import 'package:bergusi/pages/onboarding/onboarding_page.dart';
+//import 'package:bergusi/pages/ip_address/qr_scanner_page.dart';
+import 'package:bergusi/routes.dart';
+import 'package:bergusi/utils/theme_data.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

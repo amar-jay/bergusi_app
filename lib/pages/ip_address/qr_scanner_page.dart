@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
-import 'package:myapp/dialog.dart';
-import 'package:myapp/pages/auth/components/snackbar.dart';
-import 'package:myapp/routes.dart';
+import 'package:bergusi/constants.dart';
+import 'package:bergusi/dialog.dart';
+import 'package:bergusi/pages/auth/components/snackbar.dart';
+import 'package:bergusi/routes.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerPage extends StatefulWidget {

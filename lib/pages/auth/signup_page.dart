@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/pages/auth/components/snackbar.dart';
-import 'package:myapp/utils/theme_data.dart';
+import 'package:bergusi/pages/auth/components/snackbar.dart';
+import 'package:bergusi/utils/theme_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'components/sign_up_form.dart';
-import 'package:myapp/routes.dart';
+import 'package:bergusi/routes.dart';
 
 import '../../../constants.dart';
 
@@ -110,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
           children: [
             ThemeProvider().themeMode == ThemeMode.light
                 ? Image.asset(
-                    "assets/images/signup_light.jpg",
+                    "assets/images/bg-img.webp",
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: double.infinity,
                     fit: BoxFit.cover,

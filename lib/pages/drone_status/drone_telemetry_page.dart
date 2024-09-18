@@ -14,6 +14,7 @@ class DroneTelemetryPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Drone Telemetry'),
+          backgroundColor: Colors.transparent,
         ),
         body: Column(children: [
           Text('Drone IP Address: $droneIpAddress'),

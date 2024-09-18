@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
-import 'package:myapp/routes.dart';
+import 'package:bergusi/constants.dart';
+import 'package:bergusi/routes.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});

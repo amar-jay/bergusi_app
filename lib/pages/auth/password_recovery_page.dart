@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
-import 'package:myapp/pages/auth/components/reset_password_form.dart';
-import 'package:myapp/pages/auth/components/snackbar.dart';
-import 'package:myapp/routes.dart';
-import 'package:myapp/utils/theme_data.dart';
+import 'package:bergusi/constants.dart';
+import 'package:bergusi/pages/auth/components/reset_password_form.dart';
+import 'package:bergusi/pages/auth/components/snackbar.dart';
+import 'package:bergusi/routes.dart';
+import 'package:bergusi/utils/theme_data.dart';
 
 class PasswordRecoveryPage extends StatefulWidget {
   const PasswordRecoveryPage({super.key});
@@ -71,7 +71,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
           children: [
             ThemeProvider().themeMode == ThemeMode.light
                 ? Image.asset(
-                    "assets/images/login_light.jpg",
+                    "assets/images/bg-img.webp",
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: double.infinity,
                     fit: BoxFit.cover,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
+import 'package:bergusi/constants.dart';
 
 enum SnackBarType { error, warning, notification, success }
 

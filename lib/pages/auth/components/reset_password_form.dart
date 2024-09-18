@@ -24,7 +24,8 @@ class ResetPasswordForm extends StatelessWidget {
               setEmail(emal!);
               // Email
             },
-            validator: ipAddressValidator.call,
+            validator: emaildValidator.call,
+            cursorColor: Theme.of(context).primaryColor,
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(

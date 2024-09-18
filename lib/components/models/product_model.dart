@@ -1,5 +1,5 @@
 // For demo only
-import 'package:myapp/constants.dart';
+import 'package:bergusi/constants.dart';
 
 class ProductModel {
   final String image, brandName, title;

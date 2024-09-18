@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:myapp/pages/drone_status/drone_status_stream.dart';
+import 'package:bergusi/pages/drone_status/drone_status_stream.dart';
 
 // Assume the DroneStatus and DroneStatusStream classes are in a separate file
 

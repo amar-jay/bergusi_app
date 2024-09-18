@@ -1,10 +1,10 @@
+import 'package:bergusi/components/outlined_active_button.dart';
+import 'package:bergusi/pages/auth/components/set_ip_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
-import 'package:myapp/drawer.dart';
-import 'package:myapp/pages/auth/components/set_ip_form.dart';
-import 'package:myapp/routes.dart';
-import 'package:myapp/utils/theme_data.dart';
+import 'package:bergusi/constants.dart';
+import 'package:bergusi/routes.dart';
+import 'package:bergusi/utils/theme_data.dart';
 
 class IpAddressPage extends StatefulWidget {
   const IpAddressPage({super.key});
@@ -15,7 +15,7 @@ class IpAddressPage extends StatefulWidget {
 
 class _IpAddressPageState extends State<IpAddressPage> {
   final bool _isLoading = false;
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _ip;
 
   _setIp(ip) {
@@ -34,28 +34,24 @@ class _IpAddressPageState extends State<IpAddressPage> {
   }
 
   @override
-  void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        Navigator.pushNamedAndRemoveUntil(context, onboardingPageRoute,
-            ModalRoute.withName(ipAddressPageRoute));
-      }
-    });
-
-    // if user is logged in to firebase then navigate to home page
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            ThemeProvider().themeMode == ThemeMode.light
+                ? Image.asset(
+                    "assets/images/bg-img.webp",
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    "assets/images/login_dark.png",
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
             _isLoading
                 ? const CircularProgressIndicator()
                 : Padding(
@@ -84,12 +80,12 @@ class _IpAddressPageState extends State<IpAddressPage> {
                           onPressed: () {
                             _handlesetIp();
                           },
-                          child: const Text("Change New IP Address"),
+                          child: const Text("Set new IP address"),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Wanna checkout demo?"),
+                            const Text("Want to see demo?"),
                             TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(
@@ -101,14 +97,19 @@ class _IpAddressPageState extends State<IpAddressPage> {
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height > 700
-                              ? MediaQuery.of(context).size.height * 0.1
-                              : defaultPadding,
+                              ? MediaQuery.of(context).size.height * 0.05
+                              : defaultPadding / 2,
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.pushNamed(context, qrScannerPageRoute);
                           },
                           child: const Text("Set Ip by QR Code"),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height > 700
+                              ? MediaQuery.of(context).size.height * 0.05
+                              : defaultPadding / 2,
                         ),
                         Divider(
                           color: Theme.of(context)
@@ -120,21 +121,24 @@ class _IpAddressPageState extends State<IpAddressPage> {
                           endIndent:
                               16.0, // Optional: Add indentation from the end
                         ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height > 700
+                              ? MediaQuery.of(context).size.height * 0.05
+                              : defaultPadding / 2,
+                        ),
+                        OutlinedActiveButton(
+                          press: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.popAndPushNamed(
+                                context, onboardingPageRoute);
+
+                            // go to login page
+                          },
+                          text: "Logout",
+                          isActive: false,
+                        ),
                       ],
                     ),
-                  ),
-            ThemeProvider().themeMode == ThemeMode.light
-                ? Image.asset(
-                    "assets/images/login_light.jpg",
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    "assets/images/login_dark.png",
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
                   ),
           ],
         ),

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/constants.dart';
-import 'package:myapp/routes.dart';
-import 'package:myapp/utils/theme_data.dart';
+import 'package:bergusi/constants.dart';
+import 'package:bergusi/routes.dart';
+import 'package:bergusi/utils/theme_data.dart';
 
 import 'components/login_form.dart';
 
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             ThemeProvider().themeMode == ThemeMode.light
                 ? Image.asset(
-                    "assets/images/login_light.jpg",
+                    "assets/images/bg-img.webp",
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: double.infinity,
                     fit: BoxFit.cover,
