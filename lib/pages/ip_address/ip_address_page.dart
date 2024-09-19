@@ -33,6 +33,10 @@ class _IpAddressPageState extends State<IpAddressPage> {
     }
   }
 
+  _handleLogout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +132,7 @@ class _IpAddressPageState extends State<IpAddressPage> {
                         ),
                         OutlinedActiveButton(
                           press: () {
-                            FirebaseAuth.instance.signOut();
+                            _handleLogout();
                             Navigator.popAndPushNamed(
                                 context, onboardingPageRoute);
 
