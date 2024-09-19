@@ -95,7 +95,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const SignUpPage(),
       );
-    case mainPageRoute:
     case qrScannerPageRoute:
       return MaterialPageRoute(
         builder: (context) => const QRScannerPage(),
@@ -105,6 +104,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const DroneStatusPage(),
       );
+    case mainPageRoute:
     case droneControlPageRoute:
       return MaterialPageRoute(
         builder: (context) => const DroneControlPage(),
