@@ -18,8 +18,8 @@
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
-      "ms-python.debugpy"
-      "ms-python.python"
+      # "ms-python.debugpy"
+      # "ms-python.python"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
@@ -59,10 +59,10 @@
           command = ["flutter" "run" "--machine" "-d" "web-server" "--web-hostname" "0.0.0.0" "--web-port" "$PORT"];
           manager = "flutter";
         };
-        # android = {
-        #   command = ["flutter" "run" "--machine" "-d" "android" "-d" "localhost:5555"];
-        #   manager = "flutter";
-        # };
+        android = {
+          command = ["flutter" "run" "--machine" "-d" "android" "-d" "localhost:5555"];
+          manager = "flutter";
+        };
       };
     };
   };

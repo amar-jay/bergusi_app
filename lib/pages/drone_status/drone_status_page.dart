@@ -23,6 +23,23 @@ class _DroneStatusPageState extends State<DroneStatusPage> {
     _initializeStream();
   }
 
+  // void _initializeStream() {
+  //   setState(() {
+  //     _droneStatusStream = DroneStatusStream();
+  //   });
+  //   final initialStatus = _droneStatusStream?.random(10);
+  //   setState(() {
+  //     _currentStatus = initialStatus;
+  //   });
+
+  //   setState(() {
+  //     _subscription = _currentStatus?.stream().listen((status) {
+  //       setState(() {
+  //         _currentStatus = status;
+  //       });
+  //     });
+  //   });
+  // }
   void _initializeStream() {
     setState(() {
       _droneStatusStream = DroneStatusStream();
@@ -33,7 +50,8 @@ class _DroneStatusPageState extends State<DroneStatusPage> {
     });
 
     setState(() {
-      _subscription = _currentStatus?.stream().listen((status) {
+      _subscription =
+          _currentStatus?.stream("http://localhost:5000").listen((status) {
         setState(() {
           _currentStatus = status;
         });

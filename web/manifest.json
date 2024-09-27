@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "short_name": "myapp",
+    "name": "bergusi",
+    "short_name": "bergusi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

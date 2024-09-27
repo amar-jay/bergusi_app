@@ -47,11 +47,11 @@ class DroneStatus {
     required this.status,
   });
 
-  Stream<DroneStatus> stream() {
-    return Stream.periodic(
-      const Duration(seconds: 1),
-      (count) => DroneStatusStream().random(count),
-    );
+  Stream<DroneStatus> stream(String? baseUrl) async* {
+    while (true) {
+      yield await DroneStatusStream().init(DroneStatusType.real, baseUrl);
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 }
 
@@ -64,7 +64,7 @@ class DroneStatusStream {
   String _baseUrl = "";
 
   // initialized. if the url exists, then show results from the url else show random data
-  FutureOr<DroneStatus> init(DroneStatusType type, {String? baseUrl}) async {
+  FutureOr<DroneStatus> init(DroneStatusType type, String? baseUrl) async {
     //_count = count;
     if (baseUrl != null) {
       _baseUrl = baseUrl;
@@ -92,7 +92,7 @@ class DroneStatusStream {
         altitude: data['altitude'],
         speed: data['speed'],
         batteryLevel: data['battery_level'],
-        connectionStatus: data['connection_status'],
+        connectionStatus: 'Connected',
         distanceX: data['Distance_X'],
         distanceY: data['Distance_Y'],
         distanceZ: data['Distance_Z'],
@@ -138,7 +138,7 @@ class DroneStatusStream {
           pow(dronedata['Velocity_Y'], 2) +
           pow(dronedata['Velocity_Z'], 2)), //calculate speed from velocity
       batteryLevel: dronedata['Battery'],
-      connectionStatus: count % 10 == 0 ? 'Disconnected' : 'Connected',
+      connectionStatus: 'Connected',
     );
   }
 }
@@ -166,17 +166,19 @@ class DroneDataGenerator {
       "Pitch_Rate": _generateAngularRate(),
       "Yaw_Rate": _generateAngularRate(),
       "Temperature": _generateTemperature(),
-      "Status": _generateStatus(),
+      "Status": 'Connected',
     };
     return map;
   }
 
-  double _generateDistance() => 50 + _random.nextDouble() * 50; // 0 to 100 meters
+  double _generateDistance() =>
+      50 + _random.nextDouble() * 50; // 0 to 100 meters
 
   double _generateAngle() =>
       _random.nextDouble() * 360 - 180; // -180 to 180 degrees
 
-  double _generateAltitude() => 60 + _random.nextDouble() * 60; // 0 to 120 meters
+  double _generateAltitude() =>
+      60 + _random.nextDouble() * 60; // 0 to 120 meters
 
   double _generateBattery() =>
       60 + _random.nextDouble() * 2; // 0 to 100 percent

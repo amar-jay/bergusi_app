@@ -134,13 +134,47 @@ class _DroneControlWidgetState extends State<DroneControlPage> {
   void _clampJoystickPosition(bool isLeft) {
     Offset position = isLeft ? _leftJoystickPosition : _rightJoystickPosition;
     double maxRadius = 30;
+
     if (position.distance > maxRadius) {
       position = position / position.distance * maxRadius;
     }
+
+    _checkAndFireEvent(isLeft, position.dx <= -maxRadius, 'left');
+    _checkAndFireEvent(isLeft, position.dx >= maxRadius, 'right');
+    _checkAndFireEvent(isLeft, position.dy <= -maxRadius, 'top');
+    _checkAndFireEvent(isLeft, position.dy >= maxRadius, 'bottom');
+
     if (isLeft) {
       _leftJoystickPosition = position;
     } else {
       _rightJoystickPosition = position;
     }
+  }
+
+  void _checkAndFireEvent(bool isLeft, bool condition, String direction) {
+    if (condition) {
+      _fireJoystickEvent(isLeft, direction);
+    }
+  }
+
+  void _fireJoystickEvent(bool isLeft, String direction) {
+    print('joystick reached maximum $direction position');
+    if (isLeft) {
+      switch (direction) {
+        case 'left':
+        case 'right':
+        case 'top':
+        case 'bottom':
+      }
+    } else {
+      switch (direction) {
+        case 'left':
+        case 'right':
+        case 'top':
+        case 'bottom':
+      }
+    }
+    // Here you can add additional logic to handle the event,
+    // such as sending commands to the drone or updating UI elements
   }
 }
